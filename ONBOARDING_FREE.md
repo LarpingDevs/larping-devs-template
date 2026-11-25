@@ -17,6 +17,7 @@ Execute every phase below in order. Batch independent checks/writes together. On
 2. **Configure Git defaults:** Check `git config --global user.name` and `git config --global user.email`. If unset, ask me for my name and GitHub email and set them. Also set:
    - `git config --global init.defaultBranch main`
    - `git config --global pull.rebase true`
+   - `git config --global core.autocrlf input` *(prevents Mac/Windows line-ending conflicts)*
 3. **Authenticate `gh`:** Run `gh auth status`. If not logged in, pause and ask me to run `gh auth login` (HTTPS, browser login), then resume when I confirm.
 4. **Verify org access & clone:** Confirm access via `gh repo view LarpingDevs/larping-devs-template`. Create `~/Projects/LarpingDevs` (or `~\Projects\LarpingDevs` on Windows) and clone `LarpingDevs/larping-devs-template` into it (or `git pull` if already present).
 

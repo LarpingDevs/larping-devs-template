@@ -1,42 +1,41 @@
-# larping devs — Team Playbook
+# larping devs — Zero-Friction Team Playbook
 
-## 1. Setup for a New Hackathon or Project
-1. On GitHub, click **Use this template** → create a new repo under the `LarpingDevs` organization (`https://github.com/LarpingDevs`).
-2. All 4 members clone the repo and open it in Antigravity:
-   ```bash
-   git clone <repo-url>
-   cd <repo-name>
-   cp .env.example .env
-   ```
-3. Spend **15 minutes together** filling out `SPEC.md` and `GEMINI.md` (stack, commands, module owners), then push to `main`.
+> Designed for **1 Vibe-Coding Lead (Harrish — M1 Pro, AI Pro)** + **3 Beginners (Jaggu — M1/M2 Air, AI Pro; Harshini & Joel — Mac & Windows Victus, Free Accounts)** sitting together.
 
 ---
 
-## 2. Maximizing 2 AI Pro + 2 Free Accounts
-- **AI Pro Members (2):**
-  - Own `backend/`, `ai/`, database schemas, and `SPEC.md`.
-  - Handle cross-file refactors, tricky debugging, and **all PR reviews / merge conflict resolution**.
-- **Free Google Account Members (2):**
-  - Own well-scoped `frontend/` components, styling, `docs/`, unit tests, and demo/pitch assets.
-  - **Quota-saving habit:** Always `@`-mention specific files (`@SPEC.md @frontend/components/Card.tsx`) instead of asking the agent to scan the whole repo. Keep prompts focused on one component or task per turn.
+## The 3-Phrase Rule (For Jaggu, Harshini, & Joel)
+You do **not** need to memorize Git commands or coding jargon. Inside Antigravity, you only ever need **3 phrases**:
+1. **`Start my mission — I am <Name>`** → Pulls `main`, makes a safe branch, reads your exact assignment from `MISSIONS.md`, builds it, and tests it.
+2. **`Ship my work`** → Checks for leaked secrets, runs tests, commits, and opens a PR.
+3. **`Check my PR`** → Checks if the Auto-Merge Bot merged it (or automatically fixes any error and pushes again).
 
 ---
 
-## 3. Two Git Modes
+## End-to-End Hackathon / Project Flow
 
-### Mode A: Hackathon Mode (24–48h sprints)
-- **Branching:** Short-lived branches (`feat/navbar`, `feat/auth-api`).
-- **Cadence:** Open small PRs every **1–2 hours**. Never hoard 6 hours of work on one branch.
-- **Auto-Merge Bot:** `.github/workflows/pr-auto-merge.yml` automatically checks for committed `.env` files, runs lint/build/tests, squash-merges clean PRs into `main`, and deletes the feature branch. If there's a conflict, the bot comments on the PR telling the author to rebase.
-- **Sync:** Everyone runs `git pull origin main` after the bot merges a PR.
+### Phase 0: Minute 0–20 — Harrish Runs `mission-control`
+1. Create a new repo from `LarpingDevs/larping-devs-template` and open it in Antigravity.
+2. Paste the hackathon problem statement and tell Antigravity: **`Run mission-control`**.
+3. Antigravity will:
+   - Fill out `SPEC.md` (exact API shapes, models, Design Vibe, Demo Flow).
+   - Build the **Walking Skeleton** on `main` (shared navbar, theme/colors, empty pages, `/api/health`) so everyone works inside the real app from Hour 1.
+   - Generate 3 custom, conflict-free missions in `MISSIONS.md` for Jaggu, Harshini, and Joel.
+   - Push everything to `main`.
 
-### Mode B: Project Mode (Multi-week / Production)
-- **Branch protection:** Require PR + at least 1 approval + passing CI/tests before merging to `main`.
-- **Code review:** Run Antigravity's review/test checks before opening a PR.
-- **Conventional commits:** `feat:`, `fix:`, `refactor:`, `docs:`, `test:`, `chore:`.
+### Phase 1: Minute 20 — Everyone Clones & Starts
+1. All 3 teammates clone the repo, copy `.env.example` to `.env` (Harrish shares the keys), and open the folder in Antigravity.
+2. Each person types: **`Start my mission — I am <Name>`**.
+
+### Phase 2: The 1–2 Hour Build & Auto-Merge Loop
+1. Whenever someone finishes a task, they say **`Ship my work`**.
+2. **The GitHub Auto-Merge Bot** (`.github/workflows/pr-auto-merge.yml`) automatically checks for `.env` leaks, runs TypeScript/lint/build/tests, and **squash-merges** into `main`—Harrish doesn't have to review or click merge.
+3. 30–60 seconds later, the teammate says **`Check my PR`**. If the bot blocked it, Antigravity reads the bot's error comment and fixes it automatically.
+4. Once merged, they say out loud **"Merged!"** and Harrish refreshes the live preview on his screen so everyone sees the site evolving together.
 
 ---
 
-## 4. Secrets & Environment Sharing
-- **Never** paste API keys into chat logs that get committed, or into `GEMINI.md` / `.agents/`.
-- Share `.env` values over a secure channel (password manager or encrypted DM) and keep `.env` in `.gitignore`.
+## Maximizing 2 AI Pro + 2 Free Accounts
+- **Harrish (Pro, Lead):** Architecture, `mission-control`, core AI/backend, live preview on his laptop.
+- **Jaggu (Pro):** Backend CRUD / DB / full connected pages from `MISSIONS.md`.
+- **Harshini & Joel (Free):** Scoped UI components, landing pages, mock data, docs, and demo polish. Always work on one mission per chat and start a fresh chat for the next mission.

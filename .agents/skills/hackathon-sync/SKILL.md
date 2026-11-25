@@ -1,12 +1,12 @@
 ---
 name: hackathon-sync
-description: Safely sync with main, verify changes, open a PR, or check and fix a blocked/failed PR. Use when a teammate finishes a feature slice, wants to merge, or says their PR failed.
+description: Zero-jargon shipping & PR recovery skill. Trigger when a teammate says "Ship my work", "Push my PR", "Check my PR", or "My PR failed".
 ---
 
 # Hackathon Sync & PR Workflow
 
-## Mode 1: Ship Work & Open a PR
-Follow these steps in order when the user is ready to sync or open a PR:
+## Mode 1: "Ship my work" (Open a PR)
+Follow these steps in order when the user is ready to ship:
 
 1. **Check workspace status:** Run `git status` and `git diff --stat` to see all modified files.
 2. **Verify no secrets:** Confirm `.env` or hardcoded API keys are NOT staged. If a new env var was added, ensure its name is in `.env.example`.

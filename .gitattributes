@@ -1,0 +1,4 @@
+# Keep line endings consistent across macOS (3 teammates) and Windows (1 teammate)
+* text=auto eol=lf
+*.bat text eol=crlf
+*.cmd text eol=crlf

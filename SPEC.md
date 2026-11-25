@@ -38,3 +38,10 @@ export interface ExampleItem {
 Keep in `.env` locally; document names in `.env.example`:
 - `DATABASE_URL`
 - `API_KEY`
+
+## 6. Design Vibe & UI Consistency
+*(Filled by Harrish's `mission-control` at kickoff so all 4 agents style the website identically)*
+- **Theme:** `<e.g., Dark slate / Clean light>`
+- **Colors:** Background `<#...>`, Surface `<#...>`, Primary Accent `<#...>`, Text `<#...>`
+- **Typography & Radius:** `<e.g., Inter / Geist, rounded-xl cards, subtle borders>`
+- **Shared Layout:** `<e.g., Top navbar in app/layout.tsx — do not duplicate headers inside subpages>`
