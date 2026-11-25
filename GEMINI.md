@@ -3,12 +3,14 @@
 > **Shared Antigravity Context:** Every team member's Antigravity agent reads this file automatically. Keep it accurate and up to date in Git.
 
 ## 1. Team & Role Split ("larping devs")
-We are a 4-person team with **2 AI Pro accounts** and **2 Free Google accounts**. Route work to protect Free-tier quota and maximize velocity:
+We are a 4-person classmate team led by **Harrish (`h4rysh`)** with **2 AI Pro accounts** and **2 Free Google accounts**:
 
-| Role Tier | Members | Owns | How to Use Antigravity |
+| Member | Tier | Role & Owns | How to Work with Antigravity |
 | :--- | :--- | :--- | :--- |
-| **Pro Tier (2x)** | Pro 1, Pro 2 | `backend/`, `ai/`, architecture, `SPEC.md` contracts, complex debugging, PR reviews & conflict resolution | Heavy multi-file generation, Planning Mode, cross-module refactors, final integration. |
-| **Free Tier (2x)** | Free 1, Free 2 | `frontend/` UI components, styling, `docs/`, tests, pitch/demo prep | Scoped single-component/single-file tasks referencing `@SPEC.md`. Avoid broad codebase exploration. |
+| **Harrish (`h4rysh`)** | **AI Pro (Lead)** | Architecture, repo skeleton, `SPEC.md`, core AI/backend, PR reviews, conflict resolution | Heavy multi-file generation, `/plan`, `code-reviewer`, unblocking teammates, merging PRs to `main`. |
+| **Jaggu** | **AI Pro** | Secondary backend/CRUD routes, DB wiring, or full feature pages defined in `SPEC.md` | Use Antigravity Pro with `@SPEC.md` to generate & test well-defined modules step-by-step. |
+| **Harshini** | **Free** | Isolated `frontend/` UI components, styling, forms, responsive polish | Always `@`-mention `SPEC.md` + target component file. One component per chat. |
+| **Joel** | **Free** | `frontend/` static/landing pages, seed/mock data, `docs/`, unit tests, pitch/demo prep | Always `@`-mention `SPEC.md` + target file. One task per chat; sync via `hackathon-sync`. |
 
 ## 2. Project Overview
 - **Project Name:** `<PROJECT_NAME>`

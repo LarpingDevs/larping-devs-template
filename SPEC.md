@@ -14,10 +14,10 @@
 ## 2. Ownership Matrix
 | Module / Folder | Owner | Account Tier | Branch Prefix |
 | :--- | :--- | :--- | :--- |
-| `backend/`, `ai/` | `<Member 1>` | AI Pro | `feat/api-*` |
-| `shared/`, infra, PR merges | `<Member 2>` | AI Pro | `feat/infra-*` |
-| `frontend/components/` | `<Member 3>` | Free | `feat/ui-*` |
-| `docs/`, tests, demo | `<Member 4>` | Free | `feat/docs-*` |
+| Architecture, `SPEC.md`, `ai/`, PR merges | **Harrish (`h4rysh`)** | AI Pro (Lead) | `feat/core-*` |
+| `backend/` CRUD, DB wiring, secondary routes | **Jaggu** | AI Pro | `feat/api-*` |
+| `frontend/components/` (UI components, styling) | **Harshini** | Free | `feat/ui-*` |
+| `frontend/pages/` (landing/static), `docs/`, tests, demo | **Joel** | Free | `feat/docs-*` |
 
 ## 3. Data Models
 ```ts
