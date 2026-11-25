@@ -20,6 +20,7 @@ jobs:
           fetch-depth: 0
 
       - name: Block committed .env files
+        id: env_check
         run: |
           if git ls-files | grep -E '(^|/)\.env(\.|$)' | grep -v '\.env\.example$'; then
             echo "::error::A .env file was committed! Remove it and keep secrets out of Git."
@@ -27,6 +28,7 @@ jobs:
           fi
 
       - name: Run Node.js checks (if package.json exists)
+        id: node_check
         if: hashFiles('package.json') != ''
         run: |
           npm ci || npm install
@@ -34,25 +36,53 @@ jobs:
           npm run build --if-present
           npm test --if-present
 
-      - name: Run Python checks (if requirements.txt or pyproject.toml exists)
+      - name: Setup Python (if requirements.txt or pyproject.toml exists)
         if: hashFiles('requirements.txt') != '' || hashFiles('pyproject.toml') != ''
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Install & test Python
+
+      - name: Run Python checks (if requirements.txt or pyproject.toml exists)
+        id: python_check
         if: hashFiles('requirements.txt') != '' || hashFiles('pyproject.toml') != ''
         run: |
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           if command -v pytest >/dev/null 2>&1; then pytest; fi
 
       - name: Check mergeability & auto-merge PR
+        id: merge_check
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_URL: ${{ github.event.pull_request.html_url }}
         run: |
           STATE=$(gh pr view "$PR_URL" --json mergeable -q .mergeable)
           if [ "$STATE" = "CONFLICTING" ]; then
-            gh pr comment "$PR_URL" --body "🤖 **Auto-Merge Bot:** This PR has merge conflicts with \`main\`. Run \`hackathon-sync\` (or \`git fetch origin && git rebase origin/main\`) and push again—I'll auto-merge it once clean!"
+            echo "conflict=true" >> "$GITHUB_OUTPUT"
             exit 1
           fi
           gh pr merge "$PR_URL" --squash --delete-branch
+
+      - name: Notify PR author on failure with Antigravity fix prompt
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          AUTHOR: ${{ github.event.pull_request.user.login }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          ENV_OUTCOME: ${{ steps.env_check.outcome }}
+          CONFLICT: ${{ steps.merge_check.outputs.conflict }}
+        run: |
+          if [ "$ENV_OUTCOME" = "failure" ]; then
+            REASON="A \`.env\` file with secrets was committed."
+          elif [ "$CONFLICT" = "true" ]; then
+            REASON="This branch has merge conflicts with \`main\`."
+          else
+            REASON="One of the automated checks (lint, build, or tests) failed. [View logs]($RUN_URL)."
+          fi
+
+          gh pr comment "$PR_URL" --body "@${AUTHOR} 🤖 **Auto-Merge Bot couldn't merge this PR yet.**
+
+**Why:** ${REASON}
+
+**How to fix (just paste this into your Antigravity chat):**
+> \`Check my PR status and comments, read any failed check logs, fix the issue on this branch, and push again.\`"
