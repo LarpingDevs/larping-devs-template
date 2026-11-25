@@ -34,12 +34,25 @@ Create or update `~/.gemini/config/GEMINI.md` (back up any existing `GEMINI.md` 
 6. **Escalate heavy work:** If a task requires a large cross-repo refactor or complex merge conflict resolution, stop and summarize what's needed so an AI Pro teammate can handle it.
 ```
 
-### Step 4: Keep Plugins Minimal (Protect Context & Quota)
-Do NOT install heavy plugin bundles with dozens of background rules/agents on my Free account—our repo's `.agents/rules/team-collaboration.md` and `.agents/skills/hackathon-sync/SKILL.md` already give me what I need.
-Teach me these 3 quota-saving habits in 4–5 bullet points:
-- Always `@`-mention specific files (e.g., `@SPEC.md @frontend/components/Card.tsx`) instead of broad prompts.
-- Work on one component/task per chat, and start a fresh chat for the next component.
-- Use `hackathon-sync` (or ask Antigravity to branch, test, commit, and open a PR) every 1–2 hours so Pro teammates can review and merge quickly.
+### Step 4: Set Up a Quota-Friendly Skill & Keep Plugins Minimal
+Antigravity skills (`~/.gemini/config/skills/<name>/SKILL.md` globally, or `.agents/skills/` in the repo) use **progressive disclosure**—they cost almost zero tokens until triggered, making them ideal for Free accounts.
+
+1. Create one lightweight global skill at `~/.gemini/config/skills/scoped-component/SKILL.md`:
+   ```markdown
+   ---
+   name: scoped-component
+   description: Build or update a single UI component, page, or test file using SPEC.md without scanning the whole repo.
+   ---
+   # Scoped Component Workflow
+   1. Read ONLY `SPEC.md` and the exact target file(s) the user `@`-mentioned.
+   2. Implement the requested change matching existing styling and types from `SPEC.md`.
+   3. Run the lint/test command for that file if configured, then stop and summarize concisely.
+   ```
+2. **Do NOT install heavy plugin bundles** with dozens of background rules/agents on my Free account—our repo's `.agents/rules/team-collaboration.md` and `.agents/skills/hackathon-sync/SKILL.md` already give me what I need.
+3. Teach me these 3 quota-saving habits in 4–5 bullet points:
+   - Always `@`-mention specific files (e.g., `@SPEC.md @frontend/components/Card.tsx`) instead of broad prompts.
+   - Work on one component/task per chat (using the `scoped-component` skill), and start a fresh chat for the next component.
+   - Use `hackathon-sync` (from `.agents/skills/hackathon-sync/SKILL.md`) every 1–2 hours to branch, test, commit, and open a PR for Pro teammates to merge.
 
 ### Step 5: Verify Everything
 Run a final check and print a short checklist confirming:

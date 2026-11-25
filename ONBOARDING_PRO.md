@@ -56,13 +56,39 @@ Follow: INSPECT -> PLAN -> IMPLEMENT -> VERIFY -> REVIEW -> REPORT.
 - Never commit `.env` or secrets; always document new env keys in `.env.example`.
 ```
 
-### Step 4: Recommend Core Plugins & Teach Me Key Shortcuts
-1. Check which plugins are currently installed in `~/.gemini/config/plugins/`.
-2. Using the marketplace/plugin tools (or by listing what I should enable in Antigravity's Plugins Manager), recommend enabling:
+### Step 4: Set Up Global Skills (`~/.gemini/config/skills/`) & Core Plugins
+Antigravity auto-discovers skills from `~/.gemini/config/skills/<name>/SKILL.md` (global) and `<repo>/.agents/skills/<name>/SKILL.md` (shared via Git). Skills use progressive disclosure—only their name and description are loaded until triggered.
+
+1. Create two global skills for my Pro-tier team duties:
+   - `~/.gemini/config/skills/spec-kickoff/SKILL.md`:
+     ```markdown
+     ---
+     name: spec-kickoff
+     description: Run a 15-minute hackathon/project kickoff to populate SPEC.md and GEMINI.md with stack, commands, ownership matrix, data models, and API contracts.
+     ---
+     # Spec Kickoff
+     1. Read `SPEC.md` and `GEMINI.md` in the repo root.
+     2. Ask me for: project goal, tech stack, dev/test/lint commands, and which of the 4 LarpingDevs members owns each folder.
+     3. Update `SPEC.md` (models, API endpoints, env vars) and `GEMINI.md` (stack + commands) cleanly, then commit and push to `main`.
+     ```
+   - `~/.gemini/config/skills/pr-review-merge/SKILL.md`:
+     ```markdown
+     ---
+     name: pr-review-merge
+     description: Review a teammate's PR against SPEC.md, run checks, resolve any merge conflicts, and merge cleanly to main.
+     ---
+     # Pro PR Review & Merge
+     1. Fetch the PR branch (`gh pr checkout <number>` or `git fetch`).
+     2. Diff against `main` (`git diff main...HEAD`) and verify: no `.env`/secrets, contracts match `SPEC.md`, and no unintended edits outside the author's module.
+     3. Run the test/lint commands from `GEMINI.md`.
+     4. Report any blockers clearly, or approve and squash-merge (`gh pr merge --squash`).
+     ```
+2. Check which plugins are currently installed in `~/.gemini/config/plugins/`.
+3. Using the marketplace/plugin tools (or by listing what I should enable in Antigravity's Plugins Manager), recommend enabling:
    - `ecc-curated` (gives `code-reviewer`, `security-reviewer`, `tdd-guide`, `planner`, `/plan`, `/code-review`)
    - `chrome-devtools-plugin` (for frontend/API debugging)
    - `gemini-api` (for AI hackathon builds)
-3. Briefly show me how to use `/plan`, `/grill-me`, `/compact`, and `@SPEC.md` in Antigravity.
+4. Briefly show me how to use `/plan`, `/grill-me`, `/compact`, `@SPEC.md`, and my new skills (`spec-kickoff`, `pr-review-merge`).
 
 ### Step 5: Verify Everything
 Run a final check and print a concise summary confirming:
