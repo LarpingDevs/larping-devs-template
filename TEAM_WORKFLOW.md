@@ -26,9 +26,9 @@
 
 ### Mode A: Hackathon Mode (24–48h sprints)
 - **Branching:** Short-lived branches (`feat/navbar`, `feat/auth-api`).
-- **Cadence:** Merge small PRs every **1–2 hours**. Never hoard 6 hours of work on one branch.
-- **Review:** 1 AI Pro member reviews/approves and merges.
-- **Sync:** Everyone runs `git pull origin main` after each merge announcement in team chat.
+- **Cadence:** Open small PRs every **1–2 hours**. Never hoard 6 hours of work on one branch.
+- **Auto-Merge Bot:** `.github/workflows/pr-auto-merge.yml` automatically checks for committed `.env` files, runs lint/build/tests, squash-merges clean PRs into `main`, and deletes the feature branch. If there's a conflict, the bot comments on the PR telling the author to rebase.
+- **Sync:** Everyone runs `git pull origin main` after the bot merges a PR.
 
 ### Mode B: Project Mode (Multi-week / Production)
 - **Branch protection:** Require PR + at least 1 approval + passing CI/tests before merging to `main`.

@@ -1,0 +1,58 @@
+name: PR Guard & Auto-Merge Bot
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  verify-and-merge:
+    if: ${{ !github.event.pull_request.draft }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout PR
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Block committed .env files
+        run: |
+          if git ls-files | grep -E '(^|/)\.env(\.|$)' | grep -v '\.env\.example$'; then
+            echo "::error::A .env file was committed! Remove it and keep secrets out of Git."
+            exit 1
+          fi
+
+      - name: Run Node.js checks (if package.json exists)
+        if: hashFiles('package.json') != ''
+        run: |
+          npm ci || npm install
+          npm run lint --if-present
+          npm run build --if-present
+          npm test --if-present
+
+      - name: Run Python checks (if requirements.txt or pyproject.toml exists)
+        if: hashFiles('requirements.txt') != '' || hashFiles('pyproject.toml') != ''
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install & test Python
+        if: hashFiles('requirements.txt') != '' || hashFiles('pyproject.toml') != ''
+        run: |
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          if command -v pytest >/dev/null 2>&1; then pytest; fi
+
+      - name: Check mergeability & auto-merge PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+        run: |
+          STATE=$(gh pr view "$PR_URL" --json mergeable -q .mergeable)
+          if [ "$STATE" = "CONFLICTING" ]; then
+            gh pr comment "$PR_URL" --body "🤖 **Auto-Merge Bot:** This PR has merge conflicts with \`main\`. Run \`hackathon-sync\` (or \`git fetch origin && git rebase origin/main\`) and push again—I'll auto-merge it once clean!"
+            exit 1
+          fi
+          gh pr merge "$PR_URL" --squash --delete-branch
