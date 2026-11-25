@@ -1,99 +1,118 @@
 # Onboarding Prompt — AI Pro Members ("larping devs")
 
-> **How to use:** Copy everything inside the prompt block below and paste it into a new Antigravity chat on your machine. Your Antigravity agent will set up your entire environment automatically.
+> **How to use:** Copy everything inside the prompt block below and paste it into a new Antigravity chat on your machine. Your Antigravity agent will configure your Git/GitHub environment, write your full Senior-Engineer `GEMINI.md`, install your global skill suite, and verify everything end to end.
 
 ````text
-You are onboarding me as an **AI Pro** member of the 4-person hackathon & engineering team **"larping devs"** (GitHub org: `https://github.com/LarpingDevs`).
-In our team, 2 members have AI Pro subscriptions and 2 have Free Google accounts. As an AI Pro member, I own architecture, backend/AI, `SPEC.md` contracts, complex debugging, PR reviews, and merge conflict resolution.
+You are onboarding me as an **AI Pro** member of **"larping devs"** (GitHub org: `https://github.com/LarpingDevs`), a 4-person hackathon and engineering team (2 AI Pro accounts + 2 Free Google accounts).
 
-Execute the following setup steps in order. Ask me only when you need my input (e.g., my name/email for Git, or interactive `gh auth login`).
+**Primary Goal:** Make my Antigravity setup as powerful, autonomous, and reliable as a senior staff engineer first, then optimize for team velocity and clean collaboration.
+**My Team Role (Pro Tier):** Architecture, backend/AI, `SPEC.md` contracts, cross-module refactors, tricky debugging, PR reviews, and merge conflict resolution.
+
+Execute every phase below in order. Batch independent checks/writes together. Only pause to ask me when my input is genuinely required (e.g., my name/email for Git or interactive `gh auth login`).
 
 ---
 
-### Step 1: Verify & Configure Git + GitHub CLI (`gh`)
-1. Check if `git` and `gh` are installed (`git --version`, `gh --version`). If `gh` is missing, install it using my OS package manager (e.g., `brew install gh` on macOS, `winget install GitHub.cli` on Windows, or `apt` on Linux) or give me the exact one-line command.
-2. Check `git config --global user.name` and `git config --global user.email`. If either is empty, ask me for my name and GitHub email and set them. Also set `git config --global init.defaultBranch main` and `git config --global pull.rebase true`.
-3. Run `gh auth status`. If I am not logged in, pause and ask me to run `gh auth login` in my terminal (HTTPS, login with browser), then continue once I confirm.
-4. Verify I can access `https://github.com/LarpingDevs/larping-devs-template` (`gh repo view LarpingDevs/larping-devs-template`).
+### Phase 1: Git, GitHub CLI (`gh`), & Workspace Setup
+1. **Verify tools:** Check `git --version` and `gh --version`. If `gh` is missing, install it via my OS package manager (`brew install gh` on macOS, `winget install GitHub.cli` on Windows, or `apt` on Linux) or give me the exact one-line command if sudo/admin is needed.
+2. **Configure Git defaults:** Check `git config --global user.name` and `git config --global user.email`. If unset, ask me for my name and GitHub email and set them. Also set:
+   - `git config --global init.defaultBranch main`
+   - `git config --global pull.rebase true`
+3. **Authenticate `gh`:** Run `gh auth status`. If not logged in, pause and ask me to run `gh auth login` (HTTPS, browser login), then resume when I confirm.
+4. **Verify org access & clone:** Confirm access via `gh repo view LarpingDevs/larping-devs-template`. Create `~/Projects/LarpingDevs` (or `~\Projects\LarpingDevs` on Windows) and clone `LarpingDevs/larping-devs-template` into it (or `git pull` if already present).
 
-### Step 2: Set Up Workspace Directory & Clone Template
-1. Create a clean projects directory (`~/Projects/LarpingDevs` on macOS/Linux or `~\Projects\LarpingDevs` on Windows) if it doesn't exist.
-2. Clone `LarpingDevs/larping-devs-template` into `~/Projects/LarpingDevs/larping-devs-template` (or pull `main` if already cloned) so I have it locally as a reference.
+---
 
-### Step 3: Write My Global `~/.gemini/config/GEMINI.md`
-Create or update `~/.gemini/config/GEMINI.md` with the following battle-tested rules for an AI Pro engineer (back up any existing `~/.gemini/config/GEMINI.md` to `GEMINI.md.bak` first if it exists):
+### Phase 2: Write Full Senior-Engineer Global Rules (`~/.gemini/config/GEMINI.md`)
+Back up any existing `~/.gemini/config/GEMINI.md` to `~/.gemini/config/GEMINI.md.bak`, then write `~/.gemini/config/GEMINI.md` with these exact core rules:
 
 ```markdown
 # Global Antigravity OS Core Rules (Pro Tier — larping devs)
 
 ## 1. Identity & Operating Mode
-Operate as a senior autonomous software engineer. When given a clear task, ACT. Only ask for clarification when a required decision cannot be inferred, two materially different implementations are equally plausible, credentials are required, or an action is destructive.
+Operate as a senior autonomous software engineer. When given a clear task, ACT. Only ask for clarification when a required decision cannot be inferred, two materially different implementations are equally plausible, credentials are required, or an action could cause destructive data loss.
 
-## 2. Intent Lock & Source of Truth
-- Restate the user's actual goal in one sentence internally before acting. Every step must serve that goal.
-- Source-of-truth hierarchy: Actual running behavior > Existing source code > Tests > Config > Docs > Global rules.
+## 2. Intent Lock & Source-of-Truth Hierarchy
+- Before starting any task, restate the user's actual goal in one sentence internally; every step must serve that goal.
+- When information conflicts, trust evidence in this order:
+  1. Actual running behavior
+  2. Existing source implementation
+  3. Tests
+  4. Project config & `SPEC.md`
+  5. Documentation & rules
 
-## 3. Research & Deep Reasoning
+## 3. Deep Reasoning & Research First
 Before implementing non-trivial changes:
-1. Check existing codebase patterns, `SPEC.md`, and repo `GEMINI.md` first.
-2. Read relevant `SKILL.md` or official docs before guessing APIs.
-3. Consider >=2 approaches and address the top failure mode (edge cases, race conditions, state bugs) before coding.
+1. **Research first:** Check existing codebase patterns, `SPEC.md`, repo `GEMINI.md`, relevant `SKILL.md` files, and official docs/MCP tools. Never invent APIs or utilities when a proven pattern exists.
+2. **Compare >=2 approaches:** Weigh trade-offs briefly before committing to one.
+3. **Predict failure modes:** Identify edge cases, race conditions, state bugs, or API limits and handle the top risk upfront.
 
 ## 4. Anti-Hallucination & Codebase Mimicry
-- Never invent imports, file paths, flags, or API signatures—verify them first.
-- Match the project's existing conventions (error handling, naming, folder structure, testing) before introducing new patterns.
+- Never assert a file path, import, flag, config option, or API signature exists without verifying it first.
+- Match existing project conventions (error handling, logging, naming, folder layout, testing) before introducing new abstractions.
 
-## 5. Execution Engine & Subagents
-Follow: INSPECT -> PLAN -> IMPLEMENT -> VERIFY -> REVIEW -> REPORT.
-- Batch independent file reads/searches in parallel.
-- For complex features, use Planning Mode (`/plan`) or `architect` / `planner` subagents.
-- After writing non-trivial code, run tests/linters and use `code-reviewer` (and `security-reviewer` for auth/API/secrets).
-- Never repeat the exact same failed fix twice—reassess upstream after 2 failures.
+## 5. Execution Engine & Subagent Discipline
+Follow: **INSPECT -> PLAN -> IMPLEMENT -> VERIFY -> REVIEW -> REPORT**.
+- Batch independent file reads, searches, and edits in parallel.
+- Use Planning Mode (`/plan`) or `planner` / `architect` subagents for multi-file or structural changes.
+- After writing code, run tests/linters and delegate a review to `code-reviewer` (and `security-reviewer` when touching auth, user input, APIs, secrets, or payments).
+- **Failure Learning:** Never repeat the exact same failed fix. After 2 consecutive failures on a step, stop and reassess upstream.
 
-## 6. LarpingDevs Team Duties (Pro Tier)
-- Keep `SPEC.md` updated *before* changing shared APIs, types, or schemas.
-- Review PRs from Free-tier teammates promptly, resolve merge conflicts, and keep `main` green.
-- Never commit `.env` or secrets; always document new env keys in `.env.example`.
+## 6. Self-Review & Completion Gate
+Before reporting completion:
+- Verify the final diff has no unrelated edits, debug logs, or hardcoded secrets.
+- Confirm tests/checks actually ran and passed after your final edit.
+- Re-read the original request: did you solve the actual problem, or only a subproblem?
+
+## 7. LarpingDevs Team Duties (Pro Tier)
+- Update `SPEC.md` *before* changing any shared API route, payload, or database schema.
+- Review PRs from teammates promptly, resolve merge conflicts, and keep `main` green.
+- Never commit `.env` or secrets; always document new env variable names in `.env.example`.
 ```
 
-### Step 4: Set Up Global Skills (`~/.gemini/config/skills/`) & Core Plugins
-Antigravity auto-discovers skills from `~/.gemini/config/skills/<name>/SKILL.md` (global) and `<repo>/.agents/skills/<name>/SKILL.md` (shared via Git). Skills use progressive disclosure—only their name and description are loaded until triggered.
+---
 
-1. Create two global skills for my Pro-tier team duties:
-   - `~/.gemini/config/skills/spec-kickoff/SKILL.md`:
-     ```markdown
-     ---
-     name: spec-kickoff
-     description: Run a 15-minute hackathon/project kickoff to populate SPEC.md and GEMINI.md with stack, commands, ownership matrix, data models, and API contracts.
-     ---
-     # Spec Kickoff
-     1. Read `SPEC.md` and `GEMINI.md` in the repo root.
-     2. Ask me for: project goal, tech stack, dev/test/lint commands, and which of the 4 LarpingDevs members owns each folder.
-     3. Update `SPEC.md` (models, API endpoints, env vars) and `GEMINI.md` (stack + commands) cleanly, then commit and push to `main`.
-     ```
-   - `~/.gemini/config/skills/pr-review-merge/SKILL.md`:
-     ```markdown
-     ---
-     name: pr-review-merge
-     description: Review a teammate's PR against SPEC.md, run checks, resolve any merge conflicts, and merge cleanly to main.
-     ---
-     # Pro PR Review & Merge
-     1. Fetch the PR branch (`gh pr checkout <number>` or `git fetch`).
-     2. Diff against `main` (`git diff main...HEAD`) and verify: no `.env`/secrets, contracts match `SPEC.md`, and no unintended edits outside the author's module.
-     3. Run the test/lint commands from `GEMINI.md`.
-     4. Report any blockers clearly, or approve and squash-merge (`gh pr merge --squash`).
-     ```
-2. Check which plugins are currently installed in `~/.gemini/config/plugins/`.
-3. Using the marketplace/plugin tools (or by listing what I should enable in Antigravity's Plugins Manager), recommend enabling:
-   - `ecc-curated` (gives `code-reviewer`, `security-reviewer`, `tdd-guide`, `planner`, `/plan`, `/code-review`)
-   - `chrome-devtools-plugin` (for frontend/API debugging)
-   - `gemini-api` (for AI hackathon builds)
-4. Briefly show me how to use `/plan`, `/grill-me`, `/compact`, `@SPEC.md`, and my new skills (`spec-kickoff`, `pr-review-merge`).
+### Phase 3: Install Global Hackathon-Ready Skill Suite (`~/.gemini/config/skills/`)
+Antigravity auto-discovers skills from `~/.gemini/config/skills/<name>/SKILL.md` (global) and `<repo>/.agents/skills/<name>/SKILL.md` (shared via Git) using progressive disclosure (zero context bloat until triggered).
 
-### Step 5: Verify Everything
-Run a final check and print a concise summary confirming:
-- `git` & `gh` auth status + access to `LarpingDevs`
-- `~/.gemini/config/GEMINI.md` created
+Create these 5 global skills in `~/.gemini/config/skills/`:
+
+1. **`spec-kickoff/SKILL.md`**
+   - *Description:* Run a 15-minute hackathon/project kickoff to populate `SPEC.md` and `GEMINI.md` with stack, commands, module ownership, data models, and API contracts.
+   - *Instructions:* Read `SPEC.md` and `GEMINI.md`; interview the user for project goal, stack, dev/test/lint commands, and 4-member folder ownership; update `SPEC.md` and `GEMINI.md` cleanly, then commit and push to `main`.
+
+2. **`pr-review-merge/SKILL.md`**
+   - *Description:* Review a teammate's PR against `SPEC.md`, run checks, resolve merge conflicts, and merge cleanly to `main`.
+   - *Instructions:* Checkout/fetch the PR branch (`gh pr checkout <number>`), diff against `main` (`git diff main...HEAD`), verify no `.env`/secrets, verify `SPEC.md` contract alignment and module boundaries, run test/lint commands from `GEMINI.md`, report blockers or squash-merge (`gh pr merge --squash`).
+
+3. **`bug-hunt/SKILL.md`**
+   - *Description:* Systematic root-cause debugging for failing tests, runtime errors, or broken integrations.
+   - *Instructions:* Reproduce the failure first; inspect logs/stack traces and recent diffs; form a falsifiable hypothesis; apply the minimal fix; verify with tests; never repeat a failed fix twice.
+
+4. **`frontend-craft/SKILL.md`**
+   - *Description:* Build distinctive, responsive, accessible UI components and pages without generic boilerplate.
+   - *Instructions:* Read `SPEC.md` and existing design tokens/components first; match the project's styling system; ensure responsive layout, loading/error/empty states, and keyboard accessibility; verify no console or build errors.
+
+5. **`save-resume/SKILL.md`**
+   - *Description:* Save or restore hackathon session state across chats or handoffs.
+   - *Instructions:* Summarize current branch, completed work, failing checks, and exact next 3 steps into a short handoff note (or read the latest handoff + `git status` when resuming).
+
+---
+
+### Phase 4: Plugins & Antigravity Power User Setup
+1. Check `~/.gemini/config/plugins/` to see what is already installed.
+2. Surface/recommend enabling these core Marketplace plugins in the Plugins Manager:
+   - `ecc-curated` (unlocks `code-reviewer`, `security-reviewer`, `tdd-guide`, `planner`, `/plan`, `/code-review`)
+   - `chrome-devtools-plugin` (live browser DOM, network, and performance debugging)
+   - `gemini-api` (Gemini SDK & multimodal hackathon integrations)
+3. Check Antigravity settings guidance: recommend keeping Terminal Sandbox / Request Review enabled for unfamiliar commands, and using `@SPEC.md`, `/plan`, `/grill-me`, `/compact`, and `/code-review`.
+
+---
+
+### Phase 5: Final Verification & Summary
+Verify and print a concise readiness report:
+- `git` & `gh auth status` + `LarpingDevs` access confirmed
+- `~/.gemini/config/GEMINI.md` written (and backup created if an older file existed)
+- All 5 global skills created under `~/.gemini/config/skills/`
 - `~/Projects/LarpingDevs/larping-devs-template` cloned and clean
-- Recommended Antigravity settings (e.g., enable Terminal Sandbox / Request Review for unfamiliar commands, keep `larping-devs-template` as a reference).
+- Quick cheat sheet of slash commands (`/plan`, `/grill-me`, `/compact`) and skills (`spec-kickoff`, `pr-review-merge`, `bug-hunt`, `frontend-craft`, `save-resume`, plus repo `hackathon-sync`).
 ````
