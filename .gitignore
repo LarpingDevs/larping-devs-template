@@ -1,0 +1,38 @@
+# Environment & Secrets
+.env
+.env.*
+!.env.example
+
+# OS & Editor
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# Node / JS / TS
+node_modules/
+.next/
+dist/
+build/
+out/
+.turbo/
+*.tsbuildinfo
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+
+# Flutter / Dart
+.dart_tool/
+.packages
+build/
+
+# Logs
+*.log
+npm-debug.log*
