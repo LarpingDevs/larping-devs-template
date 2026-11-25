@@ -1,7 +1,7 @@
 # larping devs — Team Playbook
 
 ## 1. Setup for a New Hackathon or Project
-1. On GitHub, click **Use this template** → create a new repo under the `larping-devs` organization.
+1. On GitHub, click **Use this template** → create a new repo under the `LarpingDevs` organization (`https://github.com/LarpingDevs`).
 2. All 4 members clone the repo and open it in Antigravity:
    ```bash
    git clone <repo-url>

@@ -11,6 +11,6 @@ Shared workspace template for **larping devs** (4-person team using Antigravity:
 - `.gitignore` & `.env.example` — Secret protection and stack ignores.
 
 ## Quickstart
-1. Create a new repository from this template under your `larping-devs` GitHub org.
+1. Create a new repository from this template under the `LarpingDevs` GitHub org (`https://github.com/LarpingDevs`).
 2. Clone locally, run `cp .env.example .env`, and open the folder in Antigravity.
 3. Fill out `SPEC.md` and `GEMINI.md` together in 15 minutes, then branch and build!
